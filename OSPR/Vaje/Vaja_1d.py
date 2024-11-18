@@ -1,130 +1,143 @@
-def prastevila(n:int) -> list[int]:
-    L = [x for x in range(2,n)]
-    for i in [2,3,5,7]:
-        for j in L:
-            if j%i==0 and i!=j:
-                L.remove(j)
-        return L
+# Izpiše faktoriale števil od 1 do n.
+def nal01(n:int, strX:list = [], tmp:int = 1):
+    for i in range(1, n+1):
+        for j in range(1, i+1):
+            tmp *= j
+        strX.append(tmp)
+        tmp = 1
+    return strX
 
-# prastevila(30)
+# izpiše številsko piramido
 
-def isprime(n:int):
-    if n <= 1:
-        return False
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-# print(isprime(12))
-
-def najdaljse_podzaporedje(sez:list[int]) -> None:
-    for i in range(1,len(sez)-1):
-        if sez[i-1] > sez[i]:
-            sez.remove(sez[i])
-    print(sez)
-
-# najdaljse_podzaporedje([3,10,2,1,20])
-
-def program1(n1:str, n2:str) -> str:
-    for x,y in zip(n1,n2):
-        if x == y:
-            return "nista ciklična permutacija"
-
-    return "ciklična permutacija"
-
-# program1("abc", "fge")
-
-def Caesarjeva_sifra(niz:str, n:int) -> str:
-    Nniz = ""
-    abeceda = [
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-        'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'Z',
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-        'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'Z'
-    ]
-    for i in niz.upper():
-        Nniz += (abeceda[(abeceda.index(i))+n])
-    return Nniz
-
-# Caesarjeva_sifra("zza", 3)
-
-def mediana(sez:list[int]) -> int:
-    while len(sez) > 2:
-        V = max(sez)
-        M = min(sez)
-        sez.remove(M)
-        sez.remove(V)
-    return sez[1] if len(sez) == 2 else sez[0]
-
-# mediana([7, 1, 3, 5, 9, 6] )
-
-def program2(sez:list[list[int]]) -> list[int]:
-    Nsez = []
-    for i in sez[0]:
-        Nsez.append(i)
-    for i in range(1, len(sez)):
-        Nsez.append(sez[i][-1])
-    for i in range(len(sez[-1])-2, -1, -1):
-        print(i)
-        Nsez.append(sez[-1][i])
-    for i in range(len(sez[-2])-1):
-        Nsez.append(sez[-2][i])
+def nal02(n:int, x:int = 0):
+    for i in range(1, n+1):
+        for _ in range(i, i+i):
+            x+=1
+            print(x, end=" ")
+        print()
 
 
-    return Nsez
+def smrecica(n):
+    for i in range(1, n + 1):
+        print(' ' * (n - i) + '*' * (2 * i))
+    for _ in range(3):
+        print(' ' * (n - 1) + '**')
+
+# recica(3)
 
 
-# program2([[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+def pescena_ura(n):
+    for i in range(n, 0, -1):
+        print(' ' * (n - i) + '*' * (2 * i))
+    for i in range(1, n + 1):
+        print(' ' * (n - i) + '*' * (2 * i))
 
-def piramida(n:int):
-    x = n+1
-    for i in range(-1, n*2, +2):
-        x-=1
-        print(x*" " + i*"*")
+# pescena_ura(3)
 
-#piramida(5)
+def nal03(n:int, x:int = 2, listX:list = []):
+    def prastevilo(n):
+        for i in range(2, n):
+            if n % i == 0:
+                return False
+        return True
 
-def prvo_vecje_prastevilo(n:int) -> int:
-    while not isprime(n):
-        n+=1
-    return n
+    for i in range(n):
+        if prastevilo(i):
+            listX.append(i)
 
-# print(prvo_vecje_prastevilo(10))
+    for i in range(len(listX)//2-2):
+        for j in range(i, i+i):
+            x+=1
+            print(listX[x-1], end=" ")
+        print()
 
-def stevilo_besed(n:str):
-    return n.count(" ")+1
+# nal03(50)
+# 6.	Napišite program, ki izpiše vse možne kombinacije črk za dano besedo. Uporabi ugnezdene zanke za generiranje kombinacij.
+def nal4(beseda:str, tmp=""):
+    dolzina = len(beseda)
+    for i in range(dolzina):
+        for j in range(dolzina):
+            for k in range(dolzina):
+                if i != j and j != k and i != k:
+                    print(beseda[i] + beseda[j] + beseda[k])
 
-# print(stevilo_besed('Python je zabaven'))
+# nal4("bla")
 
-def najdaljsa_beseda(n:str):
-    x = n.split(" ")
-    return max(x, key=lambda x:len(x))
+def nal5(listX=[]):
+    while True:
+        x = input("Vnesi: ")
+        if x.lower() in "konec":
+            break
+        listX.append(x)
 
-najdaljsa_beseda('Danes je čudovit dan za učenje novih stvari.')
+    listX = list(set(listX))
+    listX.sort()
+    return f"Vnesenih je bilo {len(listX)} besed, od tega je bilo {len(set(listX))} unikatnih, ta števila so {listX}"
 
-def sorting(sez:list[str]):
-    return sorted(sez, reverse=True)
+# print(nal5())
 
-# print(sorting(['banana', 'jabolko', 'kivi'] ))
+def nal6(sez = [[1,2, 3], [4, 5, 6], [7, 8, 9]]):
+    [[print(sez[j][i], end=" ") for j in range(len(sez[i]))] and print() for i in range(len(sez))]
+    """for i in range(len(sez)):
+        for j in range(len(sez)):
+            print(sez[j][i], end=" ")
+        print()
+    """
 
-def odstani_podvojene(sez:list[int]) -> list[int]:
-    return list(set(sez))
+# nal6()
 
-print(odstani_podvojene([1, 2, 2, 3, 4, 4, 5] ))
+def nal7(Nsez=[]):
+    sez = [-1, 0, 1, 2, -1, -4]
+    sez.sort()
+
+    """
+    for i in range(len(sez)-3):
+            for j in range(3):
+                if i + sez[j] + sez[j+1] == 0:
+                    Nsez.append([i, sez[j], sez[j+1]])
+        return Nsez
+    """
+
+    return [[i, sez[j], sez[j+1]] for i in range(len(sez)-3) for j in range(3) if i + sez[j] + sez[j+1] == 0]
 
 
-# Save the results to a text file
-with open("results.txt", "w") as file:
-    file.write(f"Prastevila(30): {prastevila(30)}\n")
-    file.write(f"Isprime(12): {isprime(12)}\n")
-    file.write(f"Najdaljse podzaporedje([3,10,2,1,20]): {najdaljse_podzaporedje([3,10,2,1,20])}\n")
-    file.write(f"Program1('abc', 'fge'): {program1('abc', 'fge')}\n")
-    file.write(f"Caesarjeva sifra('zza', 3): {Caesarjeva_sifra('zza', 3)}\n")
-    file.write(f"Mediana([7, 1, 3, 5, 9, 6]): {mediana([7, 1, 3, 5, 9, 6])}\n")
-    file.write(f"Program2([[1, 2, 3], [4, 5, 6], [7, 8, 9]]): {program2([[1, 2, 3], [4, 5, 6], [7, 8, 9]])}\n")
-    file.write(f"Prvo vecje prastevilo(10): {prvo_vecje_prastevilo(10)}\n")
-    file.write(f"Stevilo besed('Python je zabaven'): {stevilo_besed('Python je zabaven')}\n")
-    file.write(f"Najdaljsa beseda('Danes je čudovit dan za učenje novih stvari.'): {najdaljsa_beseda('Danes je čudovit dan za učenje novih stvari.')}\n")
-    file.write(f"Sorting(['banana', 'jabolko', 'kivi']): {sorting(['banana', 'jabolko', 'kivi'])}\n")
-    file.write(f"Odstani podvojene([1, 2, 2, 3, 4, 4, 5]): {odstani_podvojene([1, 2, 2, 3, 4, 4, 5])}\n")
+# print(nal7())
+
+def nal8(sez = ['abc', 'dbc', 'ebc']):
+    for i in range(len(sez[0])):
+        if sez[0][i] == sez[1][i] == sez[2][i]:
+            return f"Vse tri besede imajo na mestu {i+1}. enako črko: {sez[0][i]}."
+
+#print(nal8())
+
+
+
+def nal9():
+    sez = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    n = len(sez)
+    for i in range(n):
+        sez[i][i], sez[i][n - 1 - i] = sez[i][n - 1 - i], sez[i][i]
+    return sez
+
+"""def nal9():
+    sez = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    return sez[0][::-1] , sez[1] , sez[2][::-1]"""
+
+# print(nal9())
+
+def nal10(n:int):
+    sez = [1, 2, 3]
+
+    [print(sez[i], sez[j]) if i != j else None for j in range(len(sez)) for i in range(len(sez))]
+
+    """for i in range(len(sez)):
+        for j in range(len(sez)):
+            print(sez[i], sez[j]) if i != j else None"""
+
+nal10(2)
+
+
+
+
+
+
